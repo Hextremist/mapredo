@@ -17,6 +17,8 @@
 #ifndef _HEXTREME_MAPREDO_LOOKUP_H
 #define _HEXTREME_MAPREDO_LOOKUP_H
 
+#include <algorithm>
+
 /**
  * Class used in an array to enable sorting of data.
  */

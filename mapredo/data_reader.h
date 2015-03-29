@@ -82,7 +82,7 @@ public:
     template<class U = T,
 	     typename std::enable_if<std::is_fundamental<U>::value>::type*
 	     = nullptr>
-    int compare (const T& other_key) {
+    T compare (const T& other_key) {
 	return _key - other_key;
     }
     

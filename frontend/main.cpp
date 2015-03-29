@@ -106,10 +106,17 @@ static void run (const std::string& plugin_file,
 	if (!fp)
 	{
 	    char err[80];
-
-	    throw std::runtime_error
-		(std::string("Can not open input file: ")
-                 + strerror_r(errno, err, sizeof(err)));
+#ifdef _WIN32
+		strerror_s(err, sizeof(err), errno);
+#endif
+		throw std::runtime_error
+			(std::string("Can not open input file: ")
+#ifndef _WIN32
+			+ strerror_r(errno, err, sizeof(err))
+#else
+			= err
+#endif
+			);
 	}
     }
 

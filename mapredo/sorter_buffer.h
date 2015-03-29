@@ -23,6 +23,10 @@
 
 #include "lookup.h"
 
+#ifdef _WIN32
+#define noexcept
+#endif
+
 /**
  * Represents a buffer that will be sorted, with a lookup table
  */

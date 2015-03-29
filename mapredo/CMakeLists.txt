@@ -1,5 +1,6 @@
 
-add_library (lmapredo SHARED
+ if(NOT MSVC)
+  add_library (lmapredo SHARED
   base.cpp
   buffer_trader.cpp
   consumer.cpp
@@ -9,7 +10,18 @@ add_library (lmapredo SHARED
   settings.cpp
   sorter_buffer.cpp
   sorter.cpp)
-
+else()
+  add_library (lmapredo STATIC
+  base.cpp
+  buffer_trader.cpp
+  consumer.cpp
+  directory_win32.cpp
+  engine.cpp
+  file_merger.cpp
+  settings.cpp
+  sorter_buffer.cpp
+  sorter.cpp)
+endif()
 set(lmapredo_VERSION_STRING 0.0.1)
 
 set_target_properties(lmapredo
