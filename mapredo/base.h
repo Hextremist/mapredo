@@ -26,7 +26,7 @@ namespace mapredo
     /**
      * Base class for all map-reducers
      */
-    class base
+    class SO_EXPORT base
     {
     public:
 	virtual ~base() {}

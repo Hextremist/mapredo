@@ -17,13 +17,15 @@
 #ifndef _HEXTREME_MAPREDO_CONFIG_PARAM_H
 #define _HEXTREME_MAPREDO_CONFIG_PARAM_H
 
+#include "config.h"
+
 namespace mapredo
 {
     /**
      * Base class that holds information about a configuration parameter
      * for a mapreducer.
      */
-    class config_parameter
+    class SO_EXPORT config_parameter
     {
     public:
 	config_parameter (const std::string& name,

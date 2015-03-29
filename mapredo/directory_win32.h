@@ -25,7 +25,7 @@
 /**
  * Directory handling code, wraps WG21/N1975=06-0045
  */
-class directory
+class SO_EXPORT directory
 {
 public:
     class const_iterator

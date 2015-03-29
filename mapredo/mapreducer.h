@@ -17,6 +17,8 @@
 #ifndef _HEXTREME_MAPREDO_MAPREDUCER_H
 #define _HEXTREME_MAPREDO_MAPREDUCER_H
 
+#include "config.h"
+
 #include "base.h"
 #include "valuelist.h"
 #include "rcollector.h"
@@ -108,17 +110,6 @@ namespace mapredo
 	size_t _prev_size = 0;
     };
 }
-
-#if defined _WIN32 || defined __CYGWIN__
- #define SO_EXPORT __declspec(dllexport)
- #define SO_LOCAL
-#elif __GNUC__ > 4
- #define SO_EXPORT __attribute__((visibility("default")))
- #define SO_LOCAL  __attribute__ ((visibility ("hidden")))
-#else
- #define SO_EXPORT
- #define SO_LOCAL
-#endif
 
 /// This macro needs to be used exactly once in the map-reducer.
 #define MAPREDO_FACTORIES(t) \

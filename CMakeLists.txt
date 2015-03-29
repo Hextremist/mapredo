@@ -9,10 +9,14 @@ endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -std=c++11")
+    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden")
 endif()
 
 #message(${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS})
+
+include(CheckIncludeFiles)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h)
 
 include_directories (BEFORE ${PROJECT_SOURCE_DIR})
 
