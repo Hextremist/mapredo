@@ -17,18 +17,11 @@
 #ifndef _HEXTREME_MAPREDO_COMPRESSION_H
 #define _HEXTREME_MAPREDO_COMPRESSION_H
 
-#include <fstream>
-#include <vector>
-#include <memory>
-#include <cstring>
-#include <iostream>
 #include <sstream>
 
 #include <snappy-c.h>
 
-#include "lookup.h"
-
-/** Used to compress and uncompress data: This can make the engine faster. */
+/** Used to compress and uncompress data; this can make the engine faster. */
 class compression
 {
 public:

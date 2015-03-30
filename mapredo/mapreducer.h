@@ -21,7 +21,7 @@
 
 #include "base.h"
 #include "valuelist.h"
-#include "rcollector.h"
+#include "mcollector.h"
 
 namespace mapredo
 {

@@ -22,6 +22,7 @@
 #include <cstdio>
 #include <cctype>
 #include <iostream>
+#include <fstream>
 #include <future>
 #include <stdexcept>
 
@@ -33,9 +34,11 @@
 #include "directory_win32.h"
 #include "plugin_loader_win32.h"
 #endif
+#include "consumer.h"
 #include "settings.h"
 #include "compression.h"
 #include "prefered_stdout_output.h"
+#include "file_merger.h"
 
 engine::engine (const std::string& plugin,
 		const std::string& tmpdir,

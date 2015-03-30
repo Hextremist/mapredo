@@ -14,8 +14,12 @@
  *
  */
 
+#include <cstring>
+
 #include "consumer.h"
 #include "mapreducer.h"
+#include "buffer_trader.h"
+#include "sorter.h"
 
 consumer::consumer (mapredo::base& mapreducer,
 		    const std::string& tmpdir,

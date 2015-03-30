@@ -18,7 +18,6 @@
 #define _HEXTREME_MAPREDO_TMPFILE_READER_H
 
 #include <cstring>
-#include <sstream>
 #include <memory>
 #include <algorithm>
 

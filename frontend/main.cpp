@@ -23,6 +23,7 @@
 #else
 #include <windows.h>
 #endif
+#include <cstring>
 #include <chrono>
 #include <iostream>
 #include <thread>
