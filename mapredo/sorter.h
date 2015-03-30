@@ -18,7 +18,6 @@
 #define _HEXTREME_MAPREDO_SORTER_H
 
 #include <string>
-#include <vector>
 #include <list>
 #include <future>
 

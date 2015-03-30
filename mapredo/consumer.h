@@ -18,14 +18,20 @@
 #define _HEXTREME_MAPREDO_CONSUMER_H
 
 #include <unordered_map>
+#include <list>
 #include <thread>
+#include <vector>
 
 #include "mcollector.h"
-#include "sorter.h"
-#include "buffer_trader.h"
 
 class plugin_loader;
 class mapreducer;
+class buffer_trader;
+class sorter;
+namespace mapredo
+{
+  class base;
+}
 
 /**
  * Class used to run map and sort

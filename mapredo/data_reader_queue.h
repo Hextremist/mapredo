@@ -17,7 +17,6 @@
 #ifndef _HEXTREME_MAPREDO_DATA_READER_QUEUE_H
 #define _HEXTREME_MAPREDO_DATA_READER_QUEUE_H
 
-//#include <type_traits>
 #include <queue>
 
 #include "data_reader.h"

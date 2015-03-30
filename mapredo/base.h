@@ -18,7 +18,6 @@
 #define _HEXTREME_MAPREDO_BASE_H
 
 #include "mcollector.h"
-#include "rcollector.h"
 #include "configuration.h"
 
 namespace mapredo

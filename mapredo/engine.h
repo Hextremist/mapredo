@@ -19,22 +19,20 @@
 
 #include "config.h"
 
-#include <memory>
 #include <deque>
 #include <list>
 
-#include "collector.h"
-#include "file_merger.h"
-#include "base.h"
 #ifndef _WIN32
 #include "plugin_loader.h"
 #else
 #include "plugin_loader_win32.h"
 #endif
 #include "buffer_trader.h"
-#include "consumer.h"
 
-class buffer_trader;
+class base;
+class consumer;
+class file_merger;
+class input_buffer;
 
 /**
  * Runs overall map-reduce algorithm
