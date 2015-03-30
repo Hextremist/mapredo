@@ -31,6 +31,10 @@ set_target_properties(lmapredo
 
 target_link_libraries (lmapredo pthread snappy)
 
+#target_compile_features(lmapredo PRIVATE
+#  cxx_auto_type cxx_deleted_functions cxx_final cxx_lamdas cxx_nullptr
+#  cxx_range_for cxx_static_assert)
+
 install (TARGETS lmapredo DESTINATION ${CMAKE_INSTALL_LIBDIR})
 file (GLOB include_files "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 install (FILES ${include_files} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mapredo)

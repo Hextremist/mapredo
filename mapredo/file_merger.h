@@ -17,6 +17,8 @@
 #ifndef _HEXTREME_MAPREDO_FILE_MERGER_H
 #define _HEXTREME_MAPREDO_FILE_MERGER_H
 
+#include "config.h"
+
 #include <string>
 #include <list>
 
@@ -239,17 +241,10 @@ file_merger::do_merge (const merge_mode mode, prefered_output* alt_output,
 	if (!outfile)
 	{
 	    char err[80];
-#ifdef _WIN32
-	    strerror_s (err, sizeof(err), errno);
-#endif	
+
+	    strerror_r (errno, err, sizeof(err));
 	    throw std::invalid_argument
-		("Unable to open " + filename.str() + " for writing: "
-#ifndef _WIN32
-		 + strerror_r (errno, err, sizeof(err))
-#else
-		 + err
-#endif
-		);
+		("Unable to open " + filename.str() + " for writing: " + err);
 	}
 	_tmpfiles.push_back (filename.str());
 

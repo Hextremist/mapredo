@@ -17,11 +17,13 @@
 #ifndef _HEXTREME_MAPREDO_SETTINGS_H
 #define _HEXTREME_MAPREDO_SETTINGS_H
 
+#include "config.h"
+
 #include <cstdint>
 #include <string>
 
 /** Global settings for the engine */
-class settings
+class SO_EXPORT settings
 {
 public:
     /** @returns a singleton settings object */

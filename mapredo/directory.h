@@ -17,13 +17,15 @@
 #ifndef _HEXTREME_MAPREDO_DIRECTORY_H
 #define _HEXTREME_MAPREDO_DIRECTORY_H
 
+#include "config.h"
+
 #include <sys/types.h>
 #include <dirent.h>
 
 /**
  * Directory handling code, wraps plain C
  */
-class directory
+class SO_EXPORT directory
 {
 public:
     class const_iterator

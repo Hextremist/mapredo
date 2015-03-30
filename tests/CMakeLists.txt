@@ -4,11 +4,12 @@ add_executable(unittests
   data_reader.cpp
   plugin.cpp
   test.cpp
-  ../mapredo/directory.cpp)
+  ../mapredo/directory.cpp
+  ../mapredo/buffer_trader.cpp)
 
 target_link_libraries(unittests
-  lmapredo
   ${GTEST_BOTH_LIBRARIES}
+  snappy
   ${CMAKE_DL_LIBS})
 include_directories(../mapredo)
 

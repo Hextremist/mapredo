@@ -17,6 +17,8 @@
 #ifndef _HEXTREME_MAPREDO_ENGINE_H
 #define _HEXTREME_MAPREDO_ENGINE_H
 
+#include "config.h"
+
 #include <memory>
 #include <deque>
 #include <list>
@@ -37,7 +39,7 @@ class buffer_trader;
 /**
  * Runs overall map-reduce algorithm
  */
-class engine
+class SO_EXPORT engine
 {
 public:
     /**

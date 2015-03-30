@@ -51,11 +51,7 @@ engine::engine (const std::string& plugin,
     _max_files (max_open_files),
     _buffer_trader (0x100000, parallel)
 {
-#ifndef _WIN32
     if (access(tmpdir.c_str(), R_OK|W_OK|X_OK) != 0)
-#else
-    if (_access_s(tmpdir.c_str(), 0x06) != 0)
-#endif
     {
 	throw std::runtime_error (tmpdir + " needs to be a writable directory");
     }
@@ -390,16 +386,8 @@ engine::output_final_files()
 	{
 	    char err[80];
 
-#ifdef _WIN32
-		strerror_s (err, sizeof(err), errno);
-#endif
-		throw std::runtime_error("Can not open " + file + ": "
-#ifndef _WIN32
-			+ strerror_r(errno, err, sizeof(err))
-#else
-			+ err
-#endif
-			);
+	    strerror_r (errno, err, sizeof(err));
+	    throw std::runtime_error("Can not open " + file + ": " + err);
 	}
 #ifndef _WIN32
 	if (!settings::instance().keep_tmpfiles()) unlink (file.c_str());
