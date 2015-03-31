@@ -1,3 +1,44 @@
 /**
 \mainpage API for @CMAKE_PROJECT_NAME@ @PACKAGE_VERSION@
+
+Creating New Map-Reduce Plugin Modules
+--------------------------------------
+
+The best way to learn how to create plugins for mapredo is to look at
+existing modules.  The \ref wordcount.cpp "wordcount" module is a
+simple mapreduce module that counts the frequency of all words in a
+text.  It is written in C++, but as you can see, it looks a lot lot
+like plain C.  The reason for this is is one thing -- speed.  This is
+a hotspot in the algorithm, and the map() function will be called for
+every single line in the input text, so we do not want to waste
+unnecessary time on creating and destroying objects or copying data.
+
+All map-reduce classes inherit from mapredo::mapreducer.  The most
+important functions in this class are the virtual functions \ref
+mapredo::mapreducer::map() "map()" and \ref
+mapredo::mapreducer::reduce() "reduce()".  This is where you implement
+your mapper and reducer code, which is what defines the map-reduce
+algorithm.  Your new code must contain
+
+MAPREDO_FACTORIES (_classname_)
+
+in the code to allow mapredo to instanciate and destroy objects.
+
+
+Integrating Mapredo Into a Processing Framework
+-----------------------------------------------
+
+The mapredo processing framework is normally run as a command line
+program, using files or piping of data for input and output.  It is
+*soon* also possible to integrate mapredo into other processing
+frameworks.  To achieve this, you need to make a class that inherits
+from rcollector and hand an instance of this to the \ref engine
+constructor.
+
+
+
 */
+
+/** @example wordcount.h The header file for the wordcount class. */
+
+/** @example wordcount.cpp The implementation for the wordcount class. */

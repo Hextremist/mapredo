@@ -28,14 +28,20 @@ namespace mapredo
     class SO_EXPORT config_parameter
     {
     public:
+        /**
+	 * @param name the name of the configuration parameter
+	 * @param optional whether the parameter is required or not
+	 * @param doc parameter documentation (asciidoc)
+	 * @param shortname a single character name of the parameter
+	 */
 	config_parameter (const std::string& name,
-				 const bool optional,
-				 const std::string& doc,
-				 char shortname) :
-	    _name(name),
-	    _optional(optional),
-	    _doc(doc),
-	    _shortname(shortname) {}
+			  const bool optional,
+			  const std::string& doc,
+			  char shortname) :
+	  _name(name),
+	  _optional(optional),
+	  _doc(doc),
+	  _shortname(shortname) {}
 	virtual ~config_parameter() {}
 	/**
 	 * Set the value of the configuration parameter.
@@ -56,7 +62,13 @@ namespace mapredo
     template <class T> class config_param : public config_parameter
     {
     public:
-	/* Constructor for configuration parameter objects */
+        /**
+	 * @param name the name of the configuration parameter
+	 * @param storage where the parameter is stored
+	 * @param optional whether the parameter is required or not
+	 * @param doc parameter documentation (asciidoc)
+	 * @param shortname a single character name of the parameter
+	 */
 	config_param (const std::string& name, T& storage, const bool optional,
 		      const std::string& doc, char shortname) :
 	    config_parameter (name, optional, doc, shortname),
