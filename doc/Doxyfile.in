@@ -753,7 +753,7 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = @CMAKE_SOURCE_DIR@/mapredo @CMAKE_CURRENT_BINARY_DIR@/mainpage.dox
+INPUT                  = @CMAKE_SOURCE_DIR@/mapredo/base.h @CMAKE_SOURCE_DIR@/mapredo/mapreducer.h @CMAKE_SOURCE_DIR@/mapredo/engine.h @CMAKE_SOURCE_DIR@/mapredo/dictionary.h @CMAKE_SOURCE_DIR@/mapredo/config.h @CMAKE_SOURCE_DIR@/mapredo/config_param.h @CMAKE_SOURCE_DIR@/mapredo/settings.h @CMAKE_SOURCE_DIR@/mapredo/directory.h @CMAKE_CURRENT_BINARY_DIR@/mainpage.dox
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

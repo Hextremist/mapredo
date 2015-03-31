@@ -31,10 +31,9 @@ namespace mapredo
     template <class T> class mapreducer : public base
     {
     public:
-	typedef valuelist<T> vlist;
+      using vlist = valuelist<T>; /**< Used in reduce() prototype */
 
-	mapreducer (const bool reverse = false) :
-	_reverse(reverse), _numeric(false) {
+      mapreducer () {
 	    static_assert (std::is_same<T,char*>::value
 			   || std::is_same<T,int64_t>::value
 			   || std::is_same<T,double>::value,
@@ -50,12 +49,9 @@ namespace mapredo
 	 * @param key key id.
 	 * @param values list of nul-terminated char* values that can be
 	 *               iterated over.
-	 * @param collector used 0 or more times to output reduce results.
+	 * @param output used 0 or more times to output reduce results.
 	 */
 	virtual void reduce (T key, vlist& values, rcollector& output) = 0;
-
-	bool reverse() const {return _reverse;}
-	bool numeric() const {return _numeric;}
 
     protected:
 	/**
@@ -103,8 +99,6 @@ namespace mapredo
 	}
 
     private:
-	const bool _reverse;
-	const bool _numeric;
 	char* _buffer = nullptr;
 	size_t _buffer_size = 0;
 	size_t _prev_size = 0;

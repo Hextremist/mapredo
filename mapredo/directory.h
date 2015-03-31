@@ -31,11 +31,15 @@ public:
     class const_iterator
     {
     public:
+        /** @param path the path to the examined directory */
 	const_iterator (const std::string& path);
 	const_iterator() : _path(""), _dir(nullptr) {}
 	~const_iterator();
+        /** Move iterator to next file */
 	const const_iterator& operator++();
+        /** Compare two iterators */
 	bool operator!=(const const_iterator& other) const;
+        /** @returns relative name of sub directory */
 	const char* operator*();
     private:
 	bool get_next_file();
@@ -47,12 +51,14 @@ public:
 
     /**
      * Open a directory for scanning
-     * @param name path to directory
+     * @param path the path to the directory examined
      */
     directory (const std::string& path);
     virtual ~directory() {}
 
+    /** Iterator to first file in directory */
     const_iterator begin() const {return const_iterator (_dirname);}
+    /** Iterator to past end of last file in directory */
     const const_iterator& end() const {return _end;}
 
     /**

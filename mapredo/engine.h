@@ -41,9 +41,9 @@ class SO_EXPORT engine
 {
 public:
     /**
-     * @param loader plugin loader factory for creation of extra mapreducers
+     * @param plugin name of the map-reduce plugin to use
      * @param tmpdir temporary directory
-     * @param subdirectory under temporary directory, may be empty
+     * @param subdir sub directory under temporary directory, may be empty
      * @param parallel the number of worker threads
      * @param bytes_buffer number of bytes in each sort buffer, must be at
      *        least as high as parallel.

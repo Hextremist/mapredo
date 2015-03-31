@@ -29,16 +29,27 @@ public:
     /** @returns a singleton settings object */
     static settings& instance();
 
+    /** Parse a size string which may be postfixed with k/M/G/T */
     int64_t parse_size (const std::string& size) const;
+    /** @returns true if verbose flag is set */
     bool verbose() const {return _verbose;}
+    /** Set verbose flag */
     void set_verbose() {_verbose = true;}
+    /** @return true if compress flag is set */
     bool compressed() const {return _compressed;}
+    /** Set or unset compress flag */
     void set_compressed (const bool on = true) {_compressed = on;}
+    /** @return true if temporary files should be kept */
     bool keep_tmpfiles() const {return _keep_tmpfiles;}
+    /** Indicate whether temporary files should be kept or not */
     void set_keep_tmpfiles (const bool on = true) {_keep_tmpfiles = on;}
+    /** @return true if output should be fully sorted */
     bool sort_output() const {return _sort_output;}
+    /** Set or unset fully sorted output */
     void set_sort_output (const bool on = true) {_sort_output = on;}
+    /** @return true if output should be reverse sorted */
     bool reverse_sort() const {return _reverse_sort;}
+    /** Set or unset reverse sorted output */
     void set_reverse_sort (const bool on = true) {
 	if (on) _sort_output = true;
 	_reverse_sort = on;

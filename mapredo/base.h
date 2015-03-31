@@ -43,7 +43,7 @@ namespace mapredo
 	 * Map function.
 	 * @param line input line, nul-terminated.
 	 * @param length input line length in bytes
-	 * @param collector used 0 or more times to output map results.
+	 * @param output used 0 or more times to output map results.
 	 */
 	virtual void map (char* line, const int length,
 			  mcollector& output) = 0;
