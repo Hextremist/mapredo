@@ -33,10 +33,10 @@ namespace mapredo
 	/** The different datatypes supported for of key sorting */
 	enum keytype
 	{
-	    UNKNOWN, /// the type is not set yet
-	    STRING,  /// char*
-	    INT64,   /// 64 bit integer
-	    DOUBLE   /// double precision float
+	    UNKNOWN, ///< the type is not set yet
+	    STRING,  ///< char*
+	    INT64,   ///< 64 bit integer
+	    DOUBLE   ///< double precision float
 	};
 
 	/**

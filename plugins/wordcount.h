@@ -6,7 +6,7 @@
 #include <mapredo/mapreducer.h>
 
 /**
- * Class used to count and sort words on popularity.
+ * Class used to count word frequency
  */
 class wordcount final : public mapredo::mapreducer<char*>
 {
