@@ -28,6 +28,10 @@ endif()
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h.in
   ${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h)
 
+include(CheckIncludeFiles)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h)
+
 include_directories (BEFORE ${PROJECT_SOURCE_DIR})
 
 set (ARCHIVE_NAME ${CMAKE_PROJECT_NAME}-${PROJECT_VERSION})
