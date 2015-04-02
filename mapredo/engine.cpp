@@ -14,9 +14,11 @@
  *
  */
 
-#ifndef _WIN32
+#include "config.h"
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#else
+#elif HAVE_IO_H
 #include <io.h>
 #endif
 #include <cstdio>

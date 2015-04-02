@@ -12,9 +12,19 @@ if (CMAKE_COMPILER_IS_GNUCXX)
     "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden")
 endif()
 
-#message(${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS})
-
-include(CheckIncludeFiles)
+include (CheckIncludeFiles)
+check_include_files (unistd.h HAVE_UNISTD_H)
+check_include_files (io.h HAVE_IO_H)
+include (CheckFunctionExists)
+check_function_exists (strerror_r HAVE_STRERROR_R)
+if(HAVE_STRERROR_R)
+  include (CheckCXXSourceCompiles)
+  check_cxx_source_compiles("#include <cstring>
+int main() {char b[80];char* s = strerror_r(0,b,80);return 0;}"
+    HAVE_GNU_STRERROR_R)
+else()
+  check_function_exists (strerror_s HAVE_STRERROR_S)
+endif()
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h.in
   ${CMAKE_CURRENT_SOURCE_DIR}/mapredo/config.h)
 

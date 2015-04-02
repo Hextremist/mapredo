@@ -12,4 +12,10 @@
  #define SO_LOCAL
 #endif
 
+#cmakedefine HAVE_UNISTD_H 1
+#cmakedefine HAVE_IO_H 1
+#cmakedefine HAVE_STRERROR_R 1
+#cmakedefine HAVE_GNU_STRERROR_R 1
+#cmakedefine HAVE_STRERROR_S 1
+
 #endif
