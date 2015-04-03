@@ -20,6 +20,11 @@
 #include <unistd.h>
 #elif HAVE_IO_H
 #include <io.h>
+#ifndef X_OK
+#define X_OK 1
+#define W_OK 2
+#define R_OK 4
+#endif
 #endif
 #include <cstdio>
 #include <cctype>
