@@ -46,6 +46,7 @@
 #include "compression.h"
 #include "prefered_stdout_output.h"
 #include "file_merger.h"
+#include "errno_message.h"
 
 engine::engine (const std::string& plugin,
 		const std::string& tmpdir,
@@ -394,10 +395,8 @@ engine::output_final_files()
 
 	if (!fp)
 	{
-	    char err[80];
-
-	    strerror_r (errno, err, sizeof(err));
-	    throw std::runtime_error("Can not open " + file + ": " + err);
+	    throw std::runtime_error
+		(errno_message("Can not open " + file, errno));
 	}
 #ifndef _WIN32
 	if (!settings::instance().keep_tmpfiles()) unlink (file.c_str());

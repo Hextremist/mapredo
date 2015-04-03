@@ -5,6 +5,7 @@ set (sourcefiles
   consumer.cpp
   directory.cpp
   engine.cpp
+  errno_message.cpp
   file_merger.cpp
   settings.cpp
   sorter_buffer.cpp

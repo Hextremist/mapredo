@@ -20,6 +20,7 @@
 #include "settings.h"
 #include "prefered_output.h"
 #include "rcollector.h"
+#include "errno_message.h"
 
 /**
  * A collector class that writes to a temporary file
@@ -44,12 +45,9 @@ public:
 	_outfile.open (_filename_stream.str(), std::ofstream::binary);
         if (!_outfile)
         {
-            char err[80];
-
-	    strerror_r (errno, err, sizeof(err));
             throw std::invalid_argument
-                ("Unable to open " + _filename_stream.str() + " for writing: "
-		 + err);
+                (errno_message("Unable to open " + _filename_stream.str()
+			       + " for writing", errno));
         }
 
     }

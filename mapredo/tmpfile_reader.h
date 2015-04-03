@@ -23,6 +23,7 @@
 
 #include "data_reader.h"
 #include "compression.h"
+#include "errno_message.h"
 
 /**
  * Used to read a temporary file while merge sorting
@@ -92,11 +93,9 @@ tmpfile_reader<T>::tmpfile_reader (const std::string& filename,
     _fp = fopen (filename.c_str(), "rb");
     if (!_fp)
     {
-	char err[80];
-
-	strerror_r (errno, err, sizeof(err));
-	throw std::invalid_argument ("Unable to open \"" + filename
-				     + "\" for reading: " + err);
+	throw std::invalid_argument
+	    (errno_message("Unable to open \"" + filename
+			   + "\" for reading: ", errno));
     }
     
     fseek (_fp, 0, SEEK_END);

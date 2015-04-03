@@ -1,5 +1,6 @@
 *~
 *.spec
+.gdb_history
 /build
 /mapredo/config.h
 pg100*

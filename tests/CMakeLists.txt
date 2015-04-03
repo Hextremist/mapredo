@@ -5,7 +5,8 @@ add_executable(unittests
   plugin.cpp
   test.cpp
   ../mapredo/directory.cpp
-  ../mapredo/buffer_trader.cpp)
+  ../mapredo/buffer_trader.cpp
+  ../mapredo/errno_message.cpp)
 
 target_link_libraries(unittests
   ${GTEST_BOTH_LIBRARIES}

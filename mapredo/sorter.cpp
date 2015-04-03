@@ -27,6 +27,7 @@
 #include "file_merger.h"
 #include "settings.h"
 #include "compression.h"
+#include "errno_message.h"
 
 sorter::sorter (const std::string& tmpdir,
 		const uint16_t hash_index,
@@ -187,18 +188,9 @@ sorter::flush()
     tmpfile.open (filename.str(), std::ofstream::binary);
     if (!tmpfile)
     {
-	char err[80];
-#ifdef _WIN32
-	strerror_s (err, sizeof(err), errno);
-#endif
 	throw std::invalid_argument
-	    ("Unable to open " + filename.str() + " for writing: "
-#ifndef _WIN32
-	     + strerror_r (errno, err, sizeof(err))
-#else
-	     + err
-#endif
-	    );
+	    (errno_message("Unable to open " + filename.str() + " for writing",
+			   errno));
     }
 
     auto end = _buffer.lookup().cbegin() + _buffer.lookup_used();

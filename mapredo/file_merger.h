@@ -240,11 +240,9 @@ file_merger::do_merge (const merge_mode mode, prefered_output* alt_output,
 	outfile.open (filename.str(), std::ofstream::binary);
 	if (!outfile)
 	{
-	    char err[80];
-
-	    strerror_r (errno, err, sizeof(err));
 	    throw std::invalid_argument
-		("Unable to open " + filename.str() + " for writing: " + err);
+		(errno_message("Unable to open " + filename.str()
+			       + " for writing", errno));
 	}
 	_tmpfiles.push_back (filename.str());
 

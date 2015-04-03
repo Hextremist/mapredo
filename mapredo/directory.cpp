@@ -21,10 +21,7 @@
 #include <stdexcept>
 
 #include "directory.h"
-
-
-
-#include <iostream>
+#include "errno_message.h"
 
 directory::directory (const std::string& path) :
     _dirname (path)
@@ -35,10 +32,8 @@ directory::create (const std::string& path)
 {
     if (mkdir (path.c_str(), 0777) < 0)
     {
-	char err[80];
-
-	throw std::runtime_error("Can not create " + path + ": "
-				 + strerror_r(errno, err, sizeof(err)));
+	throw std::runtime_error
+	    (errno_message("Can not create " + path, errno));
     }
 }
 
@@ -60,12 +55,9 @@ directory::remove (const std::string& path,
 	if (rmdir(path.c_str()) < 0)
 	{
 	    if (errno == ENOENT) return false;
-		
-	    char err[80];
 
 	    throw std::runtime_error
-		("Can not remove " + path + ": "
-		 + strerror_r(errno, err, sizeof(err)));
+		(errno_message("Can not remove " + path, errno));
 	}
 	return true;
     }
@@ -89,11 +81,8 @@ directory::remove (const std::string& path,
 	    std::string fname (path + "/" + result->d_name);
 	    if (lstat(fname.c_str(), &st) < 0)
 	    {
-		char err[80];
-
 		throw std::runtime_error
-		    ("Can not stat " + fname + ": "
-		     + strerror_r(errno, err, sizeof(err)));
+		    (errno_message("Can not stat " + fname, errno));
 	    }
 	    if (S_ISDIR(st.st_mode))
 	    {
@@ -109,31 +98,23 @@ directory::remove (const std::string& path,
 
 	    if (unlink(fname.c_str()) < 0)
 	    {
-		char err[80];
-
 		throw std::runtime_error
-		    ("Can not remove " + fname + ": "
-		     + strerror_r(errno, err, sizeof(err)));
+		    (errno_message("Can not remove " + fname, errno));
 	    }
 	}
 	closedir (dir);
 	if (rmdir(path.c_str()) < 0)
 	{
-	    char err[80];
-
 	    throw std::runtime_error
-		("Can not remove " + path + ": "
-		 + strerror_r(errno, err, sizeof(err)));
+		(errno_message("Can not remove " + path, errno));
 	}
 	return true;
     }
 
     if (errno != ENOENT)
     {
-	char err[80];
-
-	throw std::runtime_error("Can not remove " + path + ": "
-				 + strerror_r(errno, err, sizeof(err)));
+	throw std::runtime_error
+	    (errno_message("Can not remove " + path, errno));
     }
     return false;
 }
@@ -144,10 +125,8 @@ directory::const_iterator::const_iterator (const std::string& path) :
 {
     if (!_dir)
     {
-	char err[80];
-
-	throw std::runtime_error("Can not open " + path + ": "
-				 + strerror_r(errno, err, sizeof(err)));
+	throw std::runtime_error
+	    (errno_message("Can not open " + path, errno));
     }
     get_next_file();
 }
@@ -193,8 +172,5 @@ directory::const_iterator::get_next_file()
 	   && _result->d_name[0] == '.');
     if (retval == 0) return _result;
 
-    char err[80];
-
-    throw std::runtime_error ("Can not access " + _path + ": "
-			      + strerror_r(errno, err, sizeof(err)));
+    throw std::runtime_error (errno_message("Can not access " + _path, errno));
 }

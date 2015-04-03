@@ -14,29 +14,10 @@
  *
  */
 
-#ifndef _MAPREDO_ERRNO_EXCEPTION_H
-#define _MAPREDO_ERRNO_EXCEPTION_H
+#ifndef _MAPREDO_ERRNO_MESSAGE_H
+#define _MAPREDO_ERRNO_MESSAGE_H
 
-#include "config.h"
-
-#include <stdexcept>
-
-class SO_EXPORT errno_exception : public std::runtime_error
-{
-    /**
-     * @param message text explaining what failed
-     * @param error errno code which will converted to text and appended
-     *        to message
-     */
-    errno_exception (const std::string& message, const int error) {
-#ifdef HAVE_GNU_STRERROR_R
-#elif HAVE_STRERROR_R
-#elif HAVE_STRERROR_S
-	
-#else
-	
-#endif
-    }
-};
+/** @returns a string with postfixed error message based on errno */
+std::string errno_message (const std::string& message, const int error);
 
 #endif
