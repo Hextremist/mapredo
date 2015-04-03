@@ -49,7 +49,8 @@ merge_cache::add (const uint16_t hash_index, const sorter_buffer& sorted)
 		file_merger merger (_reducer, _tmpdir, _index, 3,
 				    std::list<std::string>(),
 				    std::move(list.second));
-		merger.merge_to_file (nullptr);
+		_tmpfiles[hash_index].emplace_back
+		    (merger.merge_to_file(nullptr));
 		std::cerr << "Lagd merger\n";
 	    }
 	}
