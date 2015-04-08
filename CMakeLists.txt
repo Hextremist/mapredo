@@ -7,9 +7,15 @@ if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+if(CMAKE_VERSION VERSION_GREATER 3.1)
+  set(CMAKE_CXX_STANDARD 11)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+elseif (CMAKE_COMPILER_IS_GNUCXX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
 if (CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden")
+    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -fvisibility=hidden -fvisibility-inlines-hidden")
 endif()
 
 include (CheckIncludeFiles)
@@ -41,13 +47,6 @@ add_custom_target (dist
   COMMAND git archive --prefix=${ARCHIVE_NAME}/ HEAD
   | bzip2 > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.bz2
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-
-#set (CPACK_GENERATOR "TBZ2")
-#set (CPACK_SOURCE_GENERATOR "TBZ2")
-#set (CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${PROJECT_VERSION}")
-#set (CPACK_SOURCE_IGNORE_FILES
-#  "/build/;pg100;\\\\.git;\\\\.gitignore;~$;${CPACK_SOURCE_IGNORE_FILES}")
-#include (CPack)
 
 include (GNUInstallDirs)
 

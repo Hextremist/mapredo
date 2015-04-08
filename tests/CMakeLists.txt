@@ -11,6 +11,7 @@ add_executable(unittests
 target_link_libraries(unittests
   ${GTEST_BOTH_LIBRARIES}
   snappy
+  pthread
   ${CMAKE_DL_LIBS})
 include_directories(../mapredo)
 
