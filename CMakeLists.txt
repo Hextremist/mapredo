@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.5)
+cmake_minimum_required (VERSION 2.8.11)
 
 project (mapredo)
 set(PROJECT_VERSION 0.7.5)
@@ -13,9 +13,11 @@ if(CMAKE_VERSION VERSION_GREATER 3.1)
 elseif (CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 if (CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result -fvisibility=hidden -fvisibility-inlines-hidden")
+    "${CMAKE_CXX_FLAGS} -g -pedantic -Wall -Wno-unused-result")
 endif()
 
 include (CheckIncludeFiles)
