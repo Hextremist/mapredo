@@ -54,7 +54,7 @@ include (GNUInstallDirs)
 
 configure_file (
   "${mapredo_SOURCE_DIR}/mapredo.spec.in"
-  "${mapredo_BINARY_DIR}/mapredo.spec")
+  "${mapredo_BINARY_DIR}/mapredo.spec" @ONLY)
 
 enable_testing()
 find_package(GTest REQUIRED)

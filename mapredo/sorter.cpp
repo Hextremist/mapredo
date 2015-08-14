@@ -67,7 +67,7 @@ sorter::sorter (sorter&& other) noexcept :
 
 sorter::~sorter()
 {
-    for (auto& filename: _tmpfiles) std::remove (filename.c_str());
+    for (const auto& filename: _tmpfiles) std::remove (filename.c_str());
 }
 
 void

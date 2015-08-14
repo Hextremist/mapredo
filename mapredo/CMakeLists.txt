@@ -19,17 +19,12 @@ endif()
 add_library (lmapredo SHARED ${sourcefiles})
 set(lmapredo_VERSION_STRING 0.0.1)
 
-
 set_target_properties(lmapredo PROPERTIES
   VERSION ${lmapredo_VERSION_STRING}
   SOVERSION 0
   OUTPUT_NAME mapredo)
 
 target_link_libraries (lmapredo pthread snappy)
-
-#target_compile_features(lmapredo PRIVATE
-#  cxx_auto_type cxx_deleted_functions cxx_final cxx_lamdas cxx_nullptr
-#  cxx_range_for cxx_static_assert)
 
 set (headerfiles
   base.h
