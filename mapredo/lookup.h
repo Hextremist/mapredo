@@ -44,9 +44,9 @@ struct lookup
      * @param the array element to compare this with
      */
     bool operator< (const lookup& right) const {
-	register uint16_t len = std::min(_keylen, right._keylen);
-	register uint16_t i;
-	register const char* const rkeyvalue = right._keyvalue;
+	uint16_t len = std::min(_keylen, right._keylen);
+	uint16_t i;
+	const char* const rkeyvalue = right._keyvalue;
 
 	for (i = 0; i < len && _keyvalue[i] == rkeyvalue[i]; i++) ;
 

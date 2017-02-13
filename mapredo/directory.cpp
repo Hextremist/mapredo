@@ -23,9 +23,12 @@
 #include "directory.h"
 #include "errno_message.h"
 
+static const std::string empty_path_;
+
 directory::directory (const std::string& path) :
     _dirname (path)
 {}
+
 
 void
 directory::create (const std::string& path)
@@ -66,11 +69,12 @@ directory::remove (const std::string& path,
 
     if (dir)
     {
-	struct dirent entry;
 	struct dirent* result;
 	struct stat st;
 
-	while (readdir_r(dir, &entry, &result) == 0 && result)
+	errno = 0;
+
+	while ((result = readdir(dir)))
 	{
 	    if (strcmp (result->d_name, ".") == 0
 		|| strcmp (result->d_name, "..") == 0)
@@ -102,6 +106,12 @@ directory::remove (const std::string& path,
 		    (errno_message("Can not remove " + fname, errno));
 	    }
 	}
+	if (errno != 0)
+	{
+	    closedir (dir);
+	    throw std::runtime_error
+		(errno_message("Can not read directory " + path, errno));
+	}
 	closedir (dir);
 	if (rmdir(path.c_str()) < 0)
 	{
@@ -110,11 +120,10 @@ directory::remove (const std::string& path,
 	}
 	return true;
     }
-
-    if (errno != ENOENT)
+    else
     {
 	throw std::runtime_error
-	    (errno_message("Can not remove " + path, errno));
+	    (errno_message("Can not open directory " + path, errno));
     }
     return false;
 }
@@ -130,6 +139,10 @@ directory::const_iterator::const_iterator (const std::string& path) :
     }
     get_next_file();
 }
+
+
+directory::const_iterator::const_iterator() : _path(empty_path_), _dir(nullptr)
+{}
 
 directory::const_iterator::~const_iterator()
 {
@@ -165,12 +178,10 @@ directory::const_iterator::get_next_file()
 
     do
     {
-	retval = readdir_r(_dir, &_entry, &_result);
+	_result = readdir(_dir);
     }
-    while (retval == 0
-	   && _result
-	   && _result->d_name[0] == '.');
-    if (retval == 0) return _result;
+    while (_result && _result->d_name[0] == '.');
+    if (_result) return _result;
 
     throw std::runtime_error (errno_message("Can not access " + _path, errno));
 }

@@ -33,7 +33,7 @@ public:
     public:
         /** @param path the path to the examined directory */
 	const_iterator (const std::string& path);
-	const_iterator() : _path(""), _dir(nullptr) {}
+	const_iterator();
 	~const_iterator();
         /** Move iterator to next file */
 	const const_iterator& operator++();
