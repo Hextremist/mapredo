@@ -98,10 +98,10 @@ sorter::grab_tmpfiles()
 
 static bool sorter_r (const lookup& left, const lookup& right)
 {
-    register uint16_t len = std::min(left.keylen(), right.keylen());
-    register uint16_t i;
-    register const char* const lkeyvalue = left.keyvalue();
-    register const char* const rkeyvalue = right.keyvalue();
+    uint16_t len = std::min(left.keylen(), right.keylen());
+    uint16_t i;
+    const char* const lkeyvalue = left.keyvalue();
+    const char* const rkeyvalue = right.keyvalue();
 
     for (i = 0; i < len && lkeyvalue[i] == rkeyvalue[i]; i++) ;
 
