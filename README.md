@@ -21,15 +21,23 @@ Some of the current limitations are:
 - Windows (MSVC) port not up-to-date
 - Not tested on other UNIX like systems, including OS X
 
+### Requirements
+
+    * CMake
+    * GTest
+    * Doxygen
+    * Snappy
+    * Tclap
+
 ### Installation (linux)
 
-    mkdir build
+    mkdir build && cd build
     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
     make
     sudo make install
     
 ### Mini-HOWTO
 
-    wget http://www.gutenberg.org/cache/epub/100/pg100.txt
-    cat pg100.txt | mapredo wordcount
-    cat pg100.txt | mapredo wordcount | mapredo wordsort
+    wget https://www.gutenberg.org/files/100/100-0.txt
+    cat 100-0.txt | mapredo wordcount
+    cat 100-0.txt | mapredo wordcount | mapredo --sort numvalue

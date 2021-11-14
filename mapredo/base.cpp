@@ -14,7 +14,6 @@
  *
  */
 
-#include <iostream>
 #include <inttypes.h>
 
 #include "base.h"
@@ -84,6 +83,8 @@ mapredo::base::uint_to_ascii (uint64_t value, char* dst)
 }
 
 #if 0
+#include <iostream>
+
 int main()
 {
     std::cerr << "Digits " << digits10(1) << "\n";

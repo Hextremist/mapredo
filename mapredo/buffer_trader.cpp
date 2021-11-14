@@ -15,7 +15,6 @@
  */
 
 #include <thread>
-#include <iostream>
 #include <sstream>
 
 #include "buffer_trader.h"

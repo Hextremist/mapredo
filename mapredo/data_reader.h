@@ -18,7 +18,6 @@
 #define _HEXTREME_MAPREDO_DATA_READER_H
 
 #include <type_traits>
-#include <iostream>
 #include <stdexcept>
 
 /** Base class for classes used when reading data in merge sort phase */

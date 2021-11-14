@@ -174,8 +174,6 @@ directory::const_iterator::operator!=(const const_iterator& other) const
 bool
 directory::const_iterator::get_next_file()
 {
-    int retval;
-
     do
     {
 	_result = readdir(_dir);

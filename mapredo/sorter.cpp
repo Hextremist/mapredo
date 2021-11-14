@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>
+#include <thread>
 #include <fstream>
 #include <iostream>
 #include <memory>
