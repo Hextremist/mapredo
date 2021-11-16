@@ -7,7 +7,7 @@ MAPREDO_FACTORIES (wordsort)
 void
 wordsort::map (char* line, const int length, mapredo::mcollector& output)
 {
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i < length; ++i)
     {
 	if (line[i] == '\t')
 	{

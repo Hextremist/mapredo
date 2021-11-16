@@ -11,7 +11,7 @@ wordcount::map (char* line, const int length, mapredo::mcollector& output)
     bool seen_word = false;
     int start = 0;
 
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i < length; ++i)
     {
 	if (isspace(line[i]) || ispunct(line[i]))
 	{

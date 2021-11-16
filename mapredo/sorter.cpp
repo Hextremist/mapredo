@@ -104,7 +104,7 @@ static bool sorter_r (const lookup& left, const lookup& right)
     const char* const lkeyvalue = left.keyvalue();
     const char* const rkeyvalue = right.keyvalue();
 
-    for (i = 0; i < len && lkeyvalue[i] == rkeyvalue[i]; i++) ;
+    for (i = 0; i < len && lkeyvalue[i] == rkeyvalue[i]; ++i) ;
 
     if (i < len) return lkeyvalue[i] > rkeyvalue[i];
     return left.keylen() > right.keylen();
@@ -205,7 +205,7 @@ sorter::flush()
 	size_t inbufpos = 0;
 	size_t outbufpos = outbuffer_size;
 
-	for (auto iter = _buffer.lookup().begin(); iter != end; iter++)
+	for (auto iter = _buffer.lookup().begin(); iter != end; ++iter)
 	{
 	    if (inbufpos + iter->size() > inbuffer_size)
 	    {
@@ -224,7 +224,7 @@ sorter::flush()
     }
     else
     {
-	for (auto iter = _buffer.lookup().begin(); iter != end; iter++)
+	for (auto iter = _buffer.lookup().begin(); iter != end; ++iter)
 	{
 	    tmpfile.write (iter->keyvalue(), iter->size());
 	}

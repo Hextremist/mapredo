@@ -199,11 +199,11 @@ engine::reduce()
 	}
 	if (tmpfiles.size() == 1 && settings::instance().sort_output())
 	{
-	    _files_final_merge.push_back (tmpfiles.front());
+	    _files_final_merge.emplace_back (tmpfiles.front());
 	}
 	else if (tmpfiles.size())
 	{
-	    _mergers.push_back
+	    _mergers.emplace_back
 		(file_merger(_plugin_loader.get(),
 			     std::move(tmpfiles),
 			     _tmpdir, _unique_id++,
@@ -301,7 +301,7 @@ engine::merge_grouped (mapredo::base& mapreducer)
     results.resize (_mergers.size());
     auto riter = results.begin();
 
-    for (auto& merger: _mergers)
+    for (auto& merger: _mergers) // process files in parallel
     {
 	*riter++ = std::async (std::launch::async,
 			       &file_merger::merge_to_file,
@@ -309,14 +309,14 @@ engine::merge_grouped (mapredo::base& mapreducer)
     }
 
     for (iter = _mergers.begin(), riter = results.begin();
-	 iter != _mergers.end(); iter++, riter++)
+	 iter != _mergers.end(); ++iter, ++riter)
     {
-	std::string res (riter->get());
+	std::string res (riter->get()); // wait for the results to tick in
 	if (iter->exception_ptr())
 	{
 	    std::rethrow_exception(iter->exception_ptr());
 	}
-	_files_final_merge.push_back (res);
+        _files_final_merge.emplace_back (res);
     }
     _mergers.clear();
 
@@ -342,7 +342,7 @@ engine::merge_sorted (mapredo::base& mapreducer)
 	}
     }
 
-    for (; iter != _mergers.end(); iter++, riter++)
+    for (; iter != _mergers.end(); ++iter, ++riter)
     {
 	auto& merger (*iter);
 

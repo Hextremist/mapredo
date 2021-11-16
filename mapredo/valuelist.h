@@ -113,8 +113,7 @@ namespace mapredo
 	    char* _value;
 	};
 
-	valuelist (data_reader_queue<T>& queue) :
-	    _queue (queue) {}
+        valuelist (data_reader_queue<T>& queue) : _queue (queue) {}
 
 	template<class U = T,
 		 typename std::enable_if<std::is_fundamental<U>::value>

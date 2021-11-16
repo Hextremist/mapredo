@@ -185,3 +185,179 @@ file_merger::collect_reserved (const size_t length)
 
     _reserved_bytes = 0;
 }
+
+template <typename T> void
+file_merger::do_merge (const merge_mode mode, prefered_output* alt_output,
+		       const bool reverse)
+{
+    data_reader_queue<T> queue (reverse);
+    size_t files;
+
+    if (mode == TO_MAX_FILES)
+    {
+	files = std::min (_tmpfiles.size() - _num_merged_files,
+			  _max_open_files);
+    }
+    else files = std::min (_tmpfiles.size(), _max_open_files);
+
+    // Move max tmpfiles to queue of data readers
+    for (size_t i = 0; i < files; ++i)
+    {
+	const std::string& filename = _tmpfiles.front();
+	auto* proc = new tmpfile_reader<T>
+	    (filename, 0x100000, !settings::instance().keep_tmpfiles());
+	const T* key = proc->next_key();
+
+	if (key) queue.push(proc);
+        else if (!settings::instance().keep_tmpfiles())
+	{
+            remove (filename.c_str());  // Remove exhausted file
+	}
+
+	_tmpfiles.pop_front();
+    }
+    if (settings::instance().verbose())
+    {
+        std::ostringstream stream; // not to mix output with other threads
+	stream << "Processing " << queue.size() << " tmpfiles, "
+	       << _tmpfiles.size() << " left\n";
+        std::cerr << stream.str();
+    }
+
+    if (queue.empty())
+    {
+	throw std::runtime_error ("Queue should not be empty here");
+    }
+
+    _num_merged_files++;
+
+    if (_tmpfiles.empty() && mode == TO_OUTPUT) // last_merge, run reducer
+    {
+        if (settings::instance().verbose())
+        {
+          std::cerr << "Last merge, run reducer\n";
+        }
+	mapredo::valuelist<T> list (queue);
+
+	while (!queue.empty())
+	{
+	    static_cast<mapredo::mapreducer<T>&>(_reducer).reduce
+		(list.get_key(), list, *this);
+	}
+	flush();
+    }
+    else if (_reducer.reducer_can_combine()
+	     || (_tmpfiles.empty() && mode == TO_SINGLE_FILE))
+    {
+	tmpfile_collector collector
+	    (_file_prefix, _tmpfile_id,
+             (_tmpfiles.empty() && mode == TO_SINGLE_FILE)
+             ? alt_output
+	     : nullptr);
+	mapredo::valuelist<T> list (queue);
+
+	while (!queue.empty())
+        {
+            static_cast<mapredo::mapreducer<T>&>(_reducer).reduce
+                (list.get_key(), list, collector);
+	}
+        collector.flush();
+	_tmpfiles.emplace_back (collector.filename()); // add merged file
+    }
+    else // no reduction
+    {
+	std::ofstream outfile;
+	std::ostringstream filename;
+	const bool compressed (settings::instance().compressed());
+
+	filename << _file_prefix << _tmpfile_id++;
+	if (compressed)
+	{
+	    filename << ".snappy";
+	    _coutbuffer.reset (new char[0x15000]);
+	    _buffer_pos = 0;
+	}
+	outfile.open (filename.str(), std::ofstream::binary);
+	if (!outfile)
+	{
+	    throw std::invalid_argument
+		(errno_message("Unable to open " + filename.str()
+			       + " for writing", errno));
+	}
+	_tmpfiles.push_back (filename.str());
+
+	const T* next_key;
+	size_t length;
+	key_holder<T> keyh;
+	auto* proc = queue.top();
+	T key (keyh.get_key(*proc));
+	queue.pop();
+
+	for(;;)
+	{
+	    while ((next_key = proc->next_key())
+		   && (*proc == key || queue.empty()))
+	    {
+		auto line = proc->get_next_line (length);
+		if (compressed)
+		{
+		    if (_buffer_pos + length > _buffer_size)
+		    {
+			_coutbufpos = 0x15000;
+			_compressor->compress (_buffer,
+					       _buffer_pos,
+					       _coutbuffer.get(),
+					       _coutbufpos);
+			outfile.write (_coutbuffer.get(), _coutbufpos);
+			_buffer_pos = 0;
+		    }
+		    memcpy (_buffer + _buffer_pos, line, length);
+		    _buffer_pos += length;
+		}
+		else outfile.write (line, length);
+	    }
+
+	    if (!next_key) // file emptied
+	    {
+		delete proc;
+		if (queue.empty()) break;
+		proc = queue.top();
+		key = keyh.get_key (*proc);
+		queue.pop();
+		continue;
+	    }
+
+	    auto* nproc = queue.top();
+
+	    if (*nproc == key)
+	    {
+		queue.pop();
+		queue.push (proc);
+		proc = nproc;
+	    }
+	    else
+	    {
+		int cmp = nproc->compare (*next_key);
+		if (cmp < 0)
+		{
+		    queue.pop();
+		    queue.push (proc);
+		    proc = nproc;
+		}
+		key = keyh.get_key (*proc);
+	    }
+	}
+
+	if (compressed && _buffer_pos > 0)
+	{
+	    _coutbufpos = 0x15000;
+	    _compressor->compress (_buffer,
+				   _buffer_pos,
+				   _coutbuffer.get(),
+				   _coutbufpos);
+	    outfile.write (_coutbuffer.get(), _coutbufpos);
+	}
+
+	outfile.close();
+    }
+}
