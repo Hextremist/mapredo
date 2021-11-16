@@ -44,7 +44,10 @@ TEST(compression, restore)
 
 TEST(directory, remove)
 {
-    directory::remove ("testdir", true, true);
+    if (directory::exists("testdir"))
+    {
+        directory::remove ("testdir", true, true);
+    }
     directory::create ("testdir");
     EXPECT_THROW (directory::create ("nonexisting/testdir"),
 		  std::runtime_error);
@@ -55,10 +58,10 @@ TEST(directory, remove)
     directory dir ("testdir");
     int i = 0;
 
-    for (auto file: dir)
+    for (const auto& file : dir)
     {
-	EXPECT_GT (strlen(file), 4);
-	i++;
+        EXPECT_GT (strlen(file), 4);
+        ++i;
     }
     EXPECT_EQ (4, i);
 

@@ -120,11 +120,6 @@ directory::remove (const std::string& path,
 	}
 	return true;
     }
-    else
-    {
-	throw std::runtime_error
-	    (errno_message("Can not open directory " + path, errno));
-    }
     return false;
 }
 
@@ -179,7 +174,7 @@ directory::const_iterator::get_next_file()
 	_result = readdir(_dir);
     }
     while (_result && _result->d_name[0] == '.');
-    if (_result) return _result;
+    return _result;
 
-    throw std::runtime_error (errno_message("Can not access " + _path, errno));
+    //throw std::runtime_error (errno_message("Can not access " + _path, errno));
 }
