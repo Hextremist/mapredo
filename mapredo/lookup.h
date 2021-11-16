@@ -50,8 +50,12 @@ struct lookup
 
 	for (i = 0; i < len && _keyvalue[i] == rkeyvalue[i]; i++) ;
 
-	if (i < len) return _keyvalue[i] < rkeyvalue[i];
-	return _keylen < right._keylen;
+	if (i < len)
+        {
+            return static_cast<uint8_t>(_keyvalue[i])
+                < static_cast<uint8_t>(rkeyvalue[i]);
+        }
+        return _keylen < right._keylen;
     }
     
 private:

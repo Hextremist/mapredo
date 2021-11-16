@@ -101,12 +101,16 @@ static bool sorter_r (const lookup& left, const lookup& right)
 {
     uint16_t len = std::min(left.keylen(), right.keylen());
     uint16_t i;
-    const char* const lkeyvalue = left.keyvalue();
-    const char* const rkeyvalue = right.keyvalue();
+    const auto* lkeyvalue = left.keyvalue();
+    const auto* rkeyvalue = right.keyvalue();
 
     for (i = 0; i < len && lkeyvalue[i] == rkeyvalue[i]; ++i) ;
 
-    if (i < len) return lkeyvalue[i] > rkeyvalue[i];
+    if (i < len)
+    {
+        return static_cast<uint8_t>(lkeyvalue[i])
+            > static_cast<uint8_t>(rkeyvalue[i]);
+    }
     return left.keylen() > right.keylen();
 }
 
